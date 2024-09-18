@@ -65,12 +65,81 @@ class UserController extends Controller
         //$userCount = UserModel::where('level_id', 2)->count();
         //return view('user', ['data' => $userCount]);
 
-        $user = UserModel::firstOrCreate(
+        /*$user = UserModel::firstOrCreate(
             [
                 'username'=>'manager',
                 'nama'=>'manager'
             ]
         );
-        return view('user',['data'=>$user]);
+        return view('user',['data'=>$user]);*/
+
+        /*$user = UserModel::firstOrCreate(
+            [
+                'username'=>'manager22',
+                'nama'=>'manager Dua Dua',
+                'password'=> Hash::make('12345'),
+                'level_id'=> 2
+            ],
+        );
+        return view ('user',['data'=>$user]);*/
+
+        /*$user = UserModel::firstOrNew(
+            [
+                'username'=>'manager',
+                'nama'=>'manager'
+            ]
+        );
+        return view('user',['data'=>$user]);*/
+
+            /*$user = UserModel::firstOrNew(
+            [
+                'username'=>'manager33',
+                'nama'=>'manager Tiga Tiga',
+                'password'=> Hash::make('12345'),
+                'level_id'=> 2
+            ],
+        );
+        $user-> save();
+        return view ('user',['data'=>$user]);*/
+
+        /*$user = UserModel::create([
+            'username'=>'manager55',
+            'nama'=>'manager55',
+            'password'=> Hash::make('12345'),
+            'level_id'=> 2,
+        ]);
+
+        $user->username='manager55';
+
+        $user->isDirty();
+        $user->isDirty('username');
+        $user->isDirty('nama');
+        $user->isDirty(['nama','username']);
+        
+        $user->isClean();
+        $user->isClean('username');
+        $user->isClean('nama');
+        $user->isClean(['nama','username']);
+
+        $user->save();
+
+        $user->isDirty();
+        $user->isClean();
+        dd($user->isDirty());*/
+
+        $user =UserModel::create([
+            'username'=>'manager11',
+            'nama'=>'manager 11',
+            'password'=> Hash::make('12345'),
+            'level_id'=>2,
+        ]);
+        $user->username ='manager12';
+        $user->save();
+
+        $user->wasChanged();
+        $user->wasChanged('username');
+        $user->wasChanged(['username','level_id']);
+        $user->wasChanged('nama');
+        $user->wasChanged(['nama','username']);
     }
 }
