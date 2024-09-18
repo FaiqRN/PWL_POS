@@ -161,13 +161,18 @@ class UserController extends Controller
         $user = UserModel::all();
         return view('user',['data'=>$user]);
     }
-    public function tambah(Request $request){
+
+    public function tambah(){
+        return view('user_tambah');
+    }
+
+    public function tambah_simpan(Request $request){
         UserModel::create([
             'username'=>$request->username,
             'nama'=>$request->nama,
-            'password'=>Hash::make($request->password),
+            'password'=>Hash::make('$request->password'),
             'level_id'=>$request->level_id
         ]);
-        return view('user_tambah');
+        return redirect('/user');
     }
 }
