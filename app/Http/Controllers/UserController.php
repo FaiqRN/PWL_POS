@@ -127,6 +127,22 @@ class UserController extends Controller
         $user->isClean();
         dd($user->isDirty());*/
 
+        /*$user =UserModel::create([
+            'username'=>'manager11',
+            'nama'=>'manager 11',
+            'password'=> Hash::make('12345'),
+            'level_id'=>2,
+        ]);
+        $user->username ='manager12';
+        $user->save();
+
+        $user->wasChanged();
+        $user->wasChanged('username');
+        $user->wasChanged(['username','level_id']);
+        $user->wasChanged('nama');
+        $user->wasChanged(['nama','username']);*/
+
+
         $user =UserModel::create([
             'username'=>'manager11',
             'nama'=>'manager 11',
@@ -140,6 +156,6 @@ class UserController extends Controller
         $user->wasChanged('username');
         $user->wasChanged(['username','level_id']);
         $user->wasChanged('nama');
-        $user->wasChanged(['nama','username']);
+        dd($user->wasChanged(['nama','username']));
     }
 }
