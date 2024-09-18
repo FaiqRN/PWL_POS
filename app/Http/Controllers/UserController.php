@@ -62,7 +62,15 @@ class UserController extends Controller
         //dd($user);
         //return view ('user',['data'=>$userCount]);
 
-        $userCount = UserModel::where('level_id', 2)->count();
-        return view('user', ['data' => $userCount]);
+        //$userCount = UserModel::where('level_id', 2)->count();
+        //return view('user', ['data' => $userCount]);
+
+        $user = UserModel::firstOrCreate(
+            [
+                'username'=>'manager',
+                'nama'=>'manager'
+            ]
+        );
+        return view('user',['data'=>$user]);
     }
 }
