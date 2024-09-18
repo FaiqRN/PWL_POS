@@ -143,7 +143,7 @@ class UserController extends Controller
         $user->wasChanged(['nama','username']);*/
 
 
-        $user =UserModel::create([
+        /*$user =UserModel::create([
             'username'=>'manager11',
             'nama'=>'manager 11',
             'password'=> Hash::make('12345'),
@@ -156,6 +156,9 @@ class UserController extends Controller
         $user->wasChanged('username');
         $user->wasChanged(['username','level_id']);
         $user->wasChanged('nama');
-        dd($user->wasChanged(['nama','username']));
+        dd($user->wasChanged(['nama','username']));*/
+
+        $user = UserModel::all();
+        return view('user',['data'=>$user]);
     }
 }
