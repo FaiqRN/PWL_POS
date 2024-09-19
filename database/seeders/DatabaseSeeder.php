@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             LevelSeeder::class,
             UserSeeder::class,
-            // Tambahkan seeder lain di sini jika diperlukan
+
         ]);
     }
 }
