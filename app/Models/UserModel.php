@@ -17,8 +17,7 @@ class UserModel extends Model
     public $timestamps = false; 
     protected $fillable = ['username', 'nama', 'password', 'level_id'];
 
-    public function getRouteKeyName()
-    {
+    public function getRouteKeyName(){
         return 'user_id';
     }
 
