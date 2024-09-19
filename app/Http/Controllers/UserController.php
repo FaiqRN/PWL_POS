@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-
+use App\Models\Level;
 use App\Models\UserModel;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -165,6 +166,7 @@ class UserController extends Controller
         //dd($user);
 
         $user=UserModel::with('level')->get();
+        log::info('User data:',$user->toArray());
         return view('user',['data'=>$user]);
     }
 
