@@ -177,7 +177,19 @@ class UserController extends Controller
     }
 
     public function ubah($id){
-        $user = UserModel::find($id);
+        $user = UserModel::where('user_id', $id)->firstOrFail();
         return view('user_ubah', ['data' => $user]);
+    }
+
+    public function ubah_simpan($id, Request $request){
+        $user = UserModel::where('user_id', $id)->firstOrFail();
+        $user->username = $request->username;
+        $user->nama = $request->nama;
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->level_id = $request->level_id;
+        $user->save();
+        return redirect('/user');
     }
 }

@@ -10,7 +10,14 @@ class UserModel extends Model
     use HasFactory;
 
     protected $table = 'm_user';
-    protected $primarykey = 'user_id';
+    protected $primaryKey = 'user_id'; 
+    public $incrementing = true;
+    protected $keyType = 'int';
+    public $timestamps = false; 
+    protected $fillable = ['username', 'nama', 'password', 'level_id'];
 
-    protected $fillable = ['level_id', 'username', 'nama','password'];
+    public function getRouteKeyName()
+    {
+        return 'user_id';
+    }
 }
