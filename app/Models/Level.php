@@ -9,12 +9,16 @@ class Level extends Model
 {
     use HasFactory;
 
-    protected $table = 'levels';
+    protected $table = 'm_level';
     protected $primaryKey = 'level_id';
     protected $fillable = ['level_kode', 'level_nama'];
 
     public function users()
     {
         return $this->hasMany(UserModel::class, 'level_id', 'level_id');
+    }
+
+    public function level(){
+        return $this->belongsTo(Level::class, 'level_id', 'level_id');
     }
 }
