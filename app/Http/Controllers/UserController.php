@@ -13,16 +13,19 @@ class UserController extends Controller{
     public function index(){
         
         $breadcrumb = (object)[
-            'title'=>'Daftar User',
-            'list'=>['Home','user']
+            'title' => 'Daftar User',
+            'list' => ['Home', 'User']
         ];
-
-        $page =(object)[
-            'title'=>'Daftar user yang terdaftar dalam sistem'
+    
+        $page = (object)[
+            'title' => 'Daftar user yang terdaftar dalam sistem'
         ];
+    
+        $activemenu = 'user';     
+        $level = Level::all();
+        return view('user.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activemenu' => $activemenu, 'level' => $level ]);
+   
 
-        $activemenu ='user';
-        return view ('user.index',['breadcrumb'=>$breadcrumb,'page'=>$page,'activemenu'=>$activemenu]);
 
         //$user = UserModel::all();
         //return view('user',['data'=>$user]);
@@ -221,20 +224,27 @@ class UserController extends Controller{
     }*/
 
     public function list(Request $request) { 
-        
-        $users = UserModel::select('user_id', 'username', 'nama', 'level_id') ->with('level');
+        $users = UserModel::select('user_id', 'username', 'nama', 'level_id')->with('level');
+    
+        if ($request->filled('level_id')) {
+            $users->where('level_id', $request->level_id);
+        }
+    
         return DataTables::of($users)
-        ->addIndexColumn()
-        ->addColumn('aksi', function ($user) {
-            $btn = '<a href="'.url('/user/' . $user->user_id).'" class="btn btn-info btn-sm">Detail</a> ';
-            $btn .= '<a href="'.url('/user/' . $user->user_id . '/edit').'" class="btn btn-warning btn-sm">Edit</a> ';
-            $btn .= '<form class="d-inline-block" method="POST" action="'. url('/user/'.$user->user_id).'">'
-            . csrf_field() . method_field('DELETE') .
-            '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakit menghapus data ini?\');">Hapus</button></form>';
-            return $btn;
-        })
-        ->rawColumns(['aksi'])
-        ->make(true);
+            ->addIndexColumn()
+            ->addColumn('aksi', function ($user) {
+                $btn = '<a href="'.url('/user/' . $user->user_id).'" class="btn btn-info btn-sm">Detail</a> ';
+                $btn .= '<a href="'.url('/user/' . $user->user_id . '/edit').'" class="btn btn-warning btn-sm">Edit</a> ';
+                $btn .= '<form class="d-inline-block" method="POST" action="'. url('/user/'.$user->user_id).'">'
+                    . csrf_field() . method_field('DELETE') .
+                    '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>';
+                return $btn;
+            })
+            ->editColumn('level_id', function($user) {
+                return $user->level ? $user->level->level_nama : 'N/A';
+            })
+            ->rawColumns(['aksi'])
+            ->make(true);
     }
 
     public function create(){   
