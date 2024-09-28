@@ -14,7 +14,7 @@ class StokController extends Controller
 {
     public function index(Request $request){
         $breadcrumb = (object) [
-            'title' => 'Daftar Stok',
+            'title' => 'Daftar stok yang terdaftar dalam sistem',
             'list' => ['Home', 'Stok']
         ];
 

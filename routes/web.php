@@ -8,7 +8,8 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\StokController;
-
+use App\Http\Controllers\PenjualanController;
+use App\Http\Controllers\PenjualanDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -100,3 +101,23 @@ Route::group(['prefix' => 'stok'], function () {
     Route::put('/{id}', [StokController::class, 'update'])->name('stok.update');
     Route::delete('/{id}', [StokController::class, 'destroy'])->name('stok.destroy');
 });
+
+Route::group(['prefix' => 'penjualan'], function () {
+    Route::get('/', [PenjualanController::class, 'index'])->name('penjualan.index');
+    Route::get('/create', [PenjualanController::class, 'create'])->name('penjualan.create');
+    Route::post('/', [PenjualanController::class, 'store'])->name('penjualan.store');
+    Route::get('/{id}/edit', [PenjualanController::class, 'edit'])->name('penjualan.edit');
+    Route::put('/{id}', [PenjualanController::class, 'update'])->name('penjualan.update');
+    Route::delete('/{id}', [PenjualanController::class, 'destroy'])->name('penjualan.destroy');
+});
+
+Route::group(['prefix' => 'PenjualanDetail'], function () {
+    Route::get('/', [PenjualanDetailController::class, 'index'])->name('PenjualanDetail.index');
+    Route::get('/create', [PenjualanDetailController::class, 'create'])->name('PenjualanDetail.create');
+    Route::post('/', [PenjualanDetailController::class, 'store'])->name('PenjualanDetail.store');
+    Route::get('/{id}/edit', [PenjualanDetailController::class, 'edit'])->name('PenjualanDetail.edit');
+    Route::put('/{id}', [PenjualanDetailController::class, 'update'])->name('PenjualanDetail.update');
+    Route::delete('/{id}', [PenjualanDetailController::class, 'destroy'])->name('PenjualanDetail.destroy');
+});
+
+Route::get('/get-harga-barang/{id}', [PenjualanDetailController::class, 'getHargaBarang'])->name('get-harga-barang');

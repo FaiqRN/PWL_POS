@@ -2,11 +2,9 @@
 @section('content')
 <div class="card card-outline card-primary">
     <div class="card-header">
-    </div>
-    <div class="card-header">
         <h3 class="card-title">{{ $breadcrumb->title }}</h3>
         <div class="card-tools">
-            <a class="btn btn-sm btn-primary mt-1" href="{{ route('stok.create') }}">{{ __('Tambah Stok') }}</a>
+            <a class="btn btn-sm btn-primary mt-1" href="{{ route('PenjualanDetail.create') }}">{{ __('Tambah Detail Penjualan') }}</a>
         </div>
     </div>
     <div class="card-body">
@@ -26,14 +24,13 @@
                 </button>
             </div>
         @endif
-        <table class="table table-bordered table-striped table-hover table-sm" id="table_stok">
+        <table class="table table-bordered table-striped table-hover table-sm" id="table_penjualan_detail">
             <thead>
                 <tr>
                     <th>{{ __('ID') }}</th>
-                    <th>{{ __('Supplier') }}</th>
+                    <th>{{ __('Kode Penjualan') }}</th>
                     <th>{{ __('Barang') }}</th>
-                    <th>{{ __('User') }}</th>
-                    <th>{{ __('Tanggal') }}</th>
+                    <th>{{ __('Harga') }}</th>
                     <th>{{ __('Jumlah') }}</th>
                     <th>{{ __('Aksi') }}</th>
                 </tr>
@@ -43,24 +40,19 @@
 </div>
 @endsection
 
-@push('css')
-@endpush
-
 @push('js')
-
 <script>
     $(document).ready(function() {
-        var dataStok = $('#table_stok').DataTable({
+        var dataPenjualanDetail = $('#table_penjualan_detail').DataTable({
             serverSide: true,
             processing: true,
-            ajax: "{{ route('stok.index') }}",
+            ajax: "{{ route('PenjualanDetail.index') }}",
             columns: [
-                {data: "stok_id", name: "stok_id"},
-                {data: "supplier_nama", name: "supplier_nama"},
+                {data: "id", name: "id"},
+                {data: "penjualan_kode", name: "penjualan_kode"},
                 {data: "barang_nama", name: "barang_nama"},
-                {data: "user_nama", name: "user_nama"},
-                {data: "stok_tanggal", name: "stok_tanggal"},
-                {data: "stok_jumlah", name: "stok_jumlah"},
+                {data: "harga", name: "harga"},
+                {data: "jumlah", name: "jumlah"},
                 {data: "aksi", name: "aksi", orderable: false, searchable: false}
             ],
             order: [[0, 'asc']],

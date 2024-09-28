@@ -62,9 +62,6 @@
                 {data: "aksi", name: "aksi", orderable: false, searchable: false}
             ],
             order: [[0, 'asc']],
-            language: {
-                url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Indonesian.json"
-            }
         });
 
         $('#table_supplier_filter input').unbind().bind('keyup', function() {

@@ -2,11 +2,9 @@
 @section('content')
 <div class="card card-outline card-primary">
     <div class="card-header">
-    </div>
-    <div class="card-header">
         <h3 class="card-title">{{ $breadcrumb->title }}</h3>
         <div class="card-tools">
-            <a class="btn btn-sm btn-primary mt-1" href="{{ route('stok.create') }}">{{ __('Tambah Stok') }}</a>
+            <a class="btn btn-sm btn-primary mt-1" href="{{ route('penjualan.create') }}">{{ __('Tambah Penjualan') }}</a>
         </div>
     </div>
     <div class="card-body">
@@ -26,15 +24,14 @@
                 </button>
             </div>
         @endif
-        <table class="table table-bordered table-striped table-hover table-sm" id="table_stok">
+        <table class="table table-bordered table-striped table-hover table-sm" id="table_penjualan">
             <thead>
                 <tr>
                     <th>{{ __('ID') }}</th>
-                    <th>{{ __('Supplier') }}</th>
-                    <th>{{ __('Barang') }}</th>
                     <th>{{ __('User') }}</th>
-                    <th>{{ __('Tanggal') }}</th>
-                    <th>{{ __('Jumlah') }}</th>
+                    <th>{{ __('Pembeli') }}</th>
+                    <th>{{ __('Kode Penjualan') }}</th>
+                    <th>{{ __('Tanggal Penjualan') }}</th>
                     <th>{{ __('Aksi') }}</th>
                 </tr>
             </thead>
@@ -50,20 +47,20 @@
 
 <script>
     $(document).ready(function() {
-        var dataStok = $('#table_stok').DataTable({
+        var dataPenjualan = $('#table_penjualan').DataTable({
             serverSide: true,
             processing: true,
-            ajax: "{{ route('stok.index') }}",
+            ajax: "{{ route('penjualan.index') }}",
             columns: [
-                {data: "stok_id", name: "stok_id"},
-                {data: "supplier_nama", name: "supplier_nama"},
-                {data: "barang_nama", name: "barang_nama"},
+                {data: "penjualan_id", name: "penjualan_id"},
                 {data: "user_nama", name: "user_nama"},
-                {data: "stok_tanggal", name: "stok_tanggal"},
-                {data: "stok_jumlah", name: "stok_jumlah"},
+                {data: "pembeli", name: "pembeli"},
+                {data: "penjualan_kode", name: "penjualan_kode"},
+                {data: "penjualan_tanggal", name: "penjualan_tanggal"},
                 {data: "aksi", name: "aksi", orderable: false, searchable: false}
             ],
             order: [[0, 'asc']],
+
         });
     });
 </script>

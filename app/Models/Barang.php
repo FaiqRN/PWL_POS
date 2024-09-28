@@ -28,4 +28,8 @@ class Barang extends Model
         return $code;
     }
 
+    public function penjualanDetails(){
+        return $this->hasMany(PenjualanDetail::class, 'barang_id', 'barang_id');
+    }
+
 }
