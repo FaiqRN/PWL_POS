@@ -1,3 +1,8 @@
+@php
+    $activemenu = $activemenu ?? '';
+@endphp
+
+
 <div class="sidebar">
    <!-- SidebarSearch Form -->
     <div class="form-inline mt-2">
@@ -15,7 +20,7 @@
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
       <li class="nav-item">
-          <a href="{{ url('/') }}" class="nav-link {{ ($activemenu == 'dashboard')? 'active' : '' }} ">
+        <a href="{{ url('/') }}" class="nav-link {{ (isset($activemenu) && $activemenu == 'dashboard')? 'active' : '' }}">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>Dashboard</p>
           </a>
@@ -26,7 +31,7 @@
             <i class="nav-icon fas fa-layer-group"></i>
             <p>Level User</p>
           </a> 
-        </li> 
+        </li>
         <li class="nav-item">
           <a href="{{ url('/user') }}" class="nav-link {{ ($activemenu == 'user')? 'active' : '' }}">
             <i class="nav-icon far fa-user"></i>
@@ -45,6 +50,12 @@
           <p>Data Barang</p> 
         </a> 
       </li> 
+      <li class="nav-item">
+        <a href="{{ url('/supplier') }}" class="nav-link {{ ($activemenu == 'supplier') ? 'active' : '' }} ">
+          <i class="nav-icon fas fa-user-tie"></i>
+          <p>Data Supplier</p> 
+        </a> 
+      </li>
       <li class="nav-header">Data Transaksi</li> 
       <li class="nav-item">
         <a href="{{ url('/stok') }}" class="nav-link {{ ($activemenu == 'stok')? 'active' : '' }} ">

@@ -15,17 +15,17 @@ class SupplierSeeder extends Seeder
     {
         $data=[
             ['supplier_id'=>1,
-            'supplier_kode'=>1,
+            'supplier_kode'=>'SUP4532',
             'supplier_nama'=>'PT. ICIKIWIR',
             'supplier_alamat'=> 'jl.Patimura'],
 
             ['supplier_id'=>2,
-            'supplier_kode'=>2,
+            'supplier_kode'=>'SUP9078',
             'supplier_nama'=>'PT. ASOLOLE',
             'supplier_alamat'=> 'jl.Diponergoro'],
 
             ['supplier_id'=>3,
-            'supplier_kode'=>3,
+            'supplier_kode'=>'SUP3601',
             'supplier_nama'=>'PT. IHIR',
             'supplier_alamat'=> 'jl.Antasari'],
         ];
