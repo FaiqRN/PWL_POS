@@ -2,64 +2,88 @@
 @section('content')
 <div class="card card-outline card-primary">
     <div class="card-header">
-        <h3 class="card-title">{{ $breadcrumb->title }}</h3>
+        <h3 class="card-title">{{ $page->title }}</h3>
         <div class="card-tools">
-            <a class="btn btn-sm btn-primary mt-1" href="{{ route('kategori.create') }}">{{ __('Tambah') }}</a>
+            <a href="{{ url('/kategori/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export PDF </a>
+            <button onclick="modalAction('{{url('kategori/create_ajax')}}')" class="btn btn-sm btn-success mt-1">Tambah Ajax</button>
         </div>
     </div>
     <div class="card-body">
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-        @if (session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
-        @endif
+        @if(session('success'))
+            <div class="alert alert-success">{{session('success')}}</div>
+            @endif
+            @if (session('error'))
+            <div class="alert alert-danger">{{session('error')}}</div>
+            @endif
+            
         <table class="table table-bordered table-striped table-hover table-sm" id="table_kategori">
             <thead>
                 <tr>
-                    <th>{{ __('ID') }}</th>
-                    <th>{{ __('Kode Kategori') }}</th>
-                    <th>{{ __('Nama') }}</th>
-                    <th>{{ __('Aksi') }}</th>
+                    <th>ID</th>
+                    <th>Kode Kategori</th>
+                    <th>Nama Kategori</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
         </table>
     </div>
 </div>
+<div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" data-width="75%" aria-hidden="true"></div>
+
 @endsection
 
 @push('css')
 @endpush
 
 @push('js')
-
 <script>
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+    function modalAction(url = '') {
+        $('#myModal').load(url,function() {
+            $('#myModal').modal('show');
+        });
+    }
+
+    var dataKategori;
+
 
     $(document).ready(function() {
-        var dataKategori = $('#table_kategori').DataTable({
+        dataKategori = $('#table_kategori').DataTable({
+            // serverSide: true, jika ingin menggunakan server side processing
             serverSide: true,
-            processing: true,
-            ajax: "{{ route('kategori.index') }}",
+            ajax: {
+                "url": "{{ url('kategori/list') }}",
+                "dataType": "json",
+                "type": "POST",
+
+            },
             columns: [
-                {data: "kategori_id", name: "kategori_id"},
-                {data: "kategori_kode", name: "kategori_kode"},
-                {data: "kategori_nama", name: "kategori_nama"},
-                {data: "aksi", name: "aksi", orderable: false, searchable: false}
-            ],
-            order: [[0, 'asc']],
-            language: {
-                url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Indonesian.json"
-            }
+                {
+                    data: "DT_RowIndex",
+                    className: "",
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: "kategori_kode",
+                    className: "",
+                    orderable: true,
+                    searchable: true
+                },
+                {
+                    data: "kategori_nama",
+                    className: "",
+                    orderable: true,
+                    searchable: true
+                },
+                {
+                    data: "aksi",
+                    className: "",
+                    orderable: false,
+                    searchable: false
+                }
+            ]
         });
 
-        $('#table_kategori_filter input').unbind().bind('keyup', function() {
-            dataKategori.search(this.value).draw();
-        });
     });
 </script>
 @endpush

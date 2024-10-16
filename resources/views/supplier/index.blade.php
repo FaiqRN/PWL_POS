@@ -2,71 +2,94 @@
 @section('content')
 <div class="card card-outline card-primary">
     <div class="card-header">
-        <h3 class="card-title">{{ $breadcrumb->title }}</h3>
+        <h3 class="card-title">{{ $page->title }}</h3>
         <div class="card-tools">
-            <a class="btn btn-sm btn-primary mt-1" href="{{ route('supplier.create') }}">{{ __('Tambah') }}</a>
+            <a href="{{ url('/supplier/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export PDF </a>
+            <button onclick="modalAction('{{url('supplier/create_ajax')}}')" class="btn btn-sm btn-success mt-1">Tambah Ajax</button>
         </div>
     </div>
     <div class="card-body">
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
-        @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ session('error') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
+        @if(session('success'))
+            <div class="alert alert-success">{{session('success')}}</div>
+            @endif
+            @if (session('error'))
+            <div class="alert alert-danger">{{session('error')}}</div>
+            @endif
+            
         <table class="table table-bordered table-striped table-hover table-sm" id="table_supplier">
             <thead>
                 <tr>
-                    <th>{{ __('ID') }}</th>
-                    <th>{{ __('Kode') }}</th>
-                    <th>{{ __('Nama Supplier') }}</th>
-                    <th>{{ __('Aksi') }}</th>
+                    <th>ID</th>
+                    <th>Kode Supplier</th>
+                    <th>Nama Supplier</th>
+                    <th>Alamat Supplier</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
         </table>
     </div>
 </div>
+<div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" data-width="75%" aria-hidden="true"></div>
+
 @endsection
 
 @push('css')
 @endpush
 
 @push('js')
-
 <script>
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+        function modalAction(url = '') {
+        $('#myModal').load(url,function() {
+            $('#myModal').modal('show');
+        });
+    }
+
+    var dataSupplier;
 
     $(document).ready(function() {
-        var dataSupplier = $('#table_supplier').DataTable({
+        dataSupplier = $('#table_supplier').DataTable({
+            // serverSide: true, jika ingin menggunakan server side processing
             serverSide: true,
-            processing: true,
-            ajax: "{{ route('supplier.index') }}",
+            ajax: {
+                "url": "{{ url('supplier/list') }}",
+                "dataType": "json",
+                "type": "POST",
+
+            },
             columns: [
-                {data: "supplier_id", name: "supplier_id"},
-                {data: "supplier_kode", name: "supplier_kode"},
-                {data: "supplier_nama", name: "supplier_nama"},
-                {data: "aksi", name: "aksi", orderable: false, searchable: false}
-            ],
-            order: [[0, 'asc']],
+                {
+                    data: "DT_RowIndex",
+                    className: "",
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: "supplier_kode",
+                    className: "",
+                    orderable: true,
+                    searchable: true
+                },
+                {
+                    data: "supplier_nama",
+                    className: "",
+                    orderable: true,
+                    searchable: true
+                },
+                {
+                    data: "supplier_alamat",
+                    className: "",
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: "aksi",
+                    className: "",
+                    orderable: false,
+                    searchable: false
+                }
+            ]
         });
 
-        $('#table_supplier_filter input').unbind().bind('keyup', function() {
-            dataSupplier.search(this.value).draw();
-        });
     });
 </script>
 @endpush

@@ -1,41 +1,51 @@
 @extends('layouts.template')
-
 @section('content')
-<div class="card">
+<div class="card card-outline card-primary">
     <div class="card-header">
-        <h3 class="card-title">{{ $breadcrumb->title }}</h3>
+        <h3 class="card-title">{{ $page->title }}</h3>
+        <div class="card-tools"></div>
     </div>
     <div class="card-body">
-        <table class="table table-bordered">
+        @empty($barang)
+        <div class="alert alert-danger alert-dismissible">
+            <h5><i class="icon fas fa-ban"></i> Kesalahan!</h5>
+            Data yang Anda cari tidak ditemukan.
+        </div>
+        @else
+        <table class="table table-bordered table-striped table-hover table-sm">
             <tr>
-                <th style="width: 200px;">{{ __('ID Barang') }}</th>
+                <th>ID</th>
                 <td>{{ $barang->barang_id }}</td>
             </tr>
             <tr>
-                <th>{{ __('Kategori') }}</th>
+                <th>Kategori</th>
                 <td>{{ $barang->kategori->kategori_nama }}</td>
             </tr>
             <tr>
-                <th>{{ __('Kode Barang') }}</th>
-                <td>{{ $barang->barang_kode }}</td>
+                <th>Kode Barang</th>
+                <td>{{ $barang->barang_nama}}</td>
             </tr>
             <tr>
-                <th>{{ __('Nama Barang') }}</th>
+                <th>Nama Barang</th>
                 <td>{{ $barang->barang_nama }}</td>
             </tr>
             <tr>
-                <th>{{ __('Harga Beli') }}</th>
-                <td>Rp {{ number_format($barang->harga_beli, 0, ',', '.') }}</td>
+                <th>Harga Beli</th>
+                <td>{{ $barang->harga_beli }}</td>
             </tr>
             <tr>
-                <th>{{ __('Harga Jual') }}</th>
-                <td>Rp {{ number_format($barang->harga_jual, 0, ',', '.') }}</td>
+                <th>Harga Jual</th>
+                <td>{{ $barang->harga_jual }}</td>
             </tr>
         </table>
-        <div class="mt-3">
-            <a href="{{ route('barang.edit', $barang->barang_id) }}" class="btn btn-primary">{{ __('Edit') }}</a>
-            <a href="{{ route('barang.index') }}" class="btn btn-secondary">{{ __('Kembali') }}</a>
-        </div>
+        @endempty
+        <a href="{{ url('barang') }}" class="btn btn-sm btn-default mt-2">Kembali</a>
     </div>
 </div>
 @endsection
+
+@push('css')
+@endpush
+
+@push('js')
+@endpush
