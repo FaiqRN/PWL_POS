@@ -40,6 +40,7 @@
 </div>
 @endsection
 
+
 @push('js')
 <script>
     $(document).ready(function() {
@@ -48,7 +49,7 @@
             processing: true,
             ajax: "{{ route('PenjualanDetail.index') }}",
             columns: [
-                {data: "id", name: "id"},
+                {data: "detail_id", name: "detail_id"},
                 {data: "penjualan_kode", name: "penjualan_kode"},
                 {data: "barang_nama", name: "barang_nama"},
                 {data: "harga", name: "harga"},
@@ -60,3 +61,6 @@
     });
 </script>
 @endpush
+
+
+

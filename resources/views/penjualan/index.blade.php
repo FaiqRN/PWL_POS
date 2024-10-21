@@ -40,10 +40,13 @@
 </div>
 @endsection
 
+
 @push('css')
 @endpush
 
+
 @push('js')
+
 
 <script>
     $(document).ready(function() {
@@ -61,7 +64,11 @@
             ],
             order: [[0, 'asc']],
 
+
         });
     });
 </script>
 @endpush
+
+
+

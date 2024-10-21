@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\UserModel;
-use App\Models\LevelModel;
+use App\Models\Level;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -12,7 +12,7 @@ class RegisterController extends Controller
 {
     public function create()
     {
-        $level = LevelModel::select('level_id', 'level_nama') -> get();
+        $level = Level::select('level_id', 'level_nama') -> get();
 
         return view('auth.register') -> with('level', $level); //view untuk laman registrasi
         

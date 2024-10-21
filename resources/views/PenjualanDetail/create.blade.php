@@ -1,5 +1,6 @@
 @extends('layouts.template')
 
+
 @section('content')
 <div class="card">
     <div class="card-header">
@@ -72,7 +73,7 @@
         </div>
     </div>
     @endsection
-    
+   
     @push('js')
     <script>
         $(document).ready(function() {
@@ -81,7 +82,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-    
+   
             $('#barang_id').change(function() {
                 var barangId = $(this).val();
                 if(barangId) {
@@ -108,4 +109,7 @@
         });
     </script>
     @endpush
-            
+           
+
+
+

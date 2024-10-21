@@ -1,6 +1,8 @@
 <?php
 
+
 namespace App\Http\Controllers;
+
 
 use App\Models\Penjualan;
 use App\Models\UserModel;
@@ -8,7 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
+
 class PenjualanController extends Controller{
+
 
     public function index(Request $request){
         $breadcrumb = (object) [
@@ -16,12 +20,15 @@ class PenjualanController extends Controller{
             'list' => ['Home', 'Penjualan']
         ];
 
+
         if ($request->ajax()) {
             return $this->getPenjualanData();
         }
 
+
         return view('Penjualan.index', compact('breadcrumb'));
     }
+
 
     public function create()
 {
@@ -30,11 +37,14 @@ class PenjualanController extends Controller{
         'list' => ['Home', 'Penjualan', 'Tambah']
     ];
 
+
     $users = UserModel::all();
     $penjualanKode = Penjualan::generateKodePenjualan();
 
+
     return view('Penjualan.create', compact('breadcrumb', 'users', 'penjualanKode'));
 }
+
 
     public function store(Request $request){
         $validated = $request->validate([
@@ -43,7 +53,9 @@ class PenjualanController extends Controller{
             'penjualan_tanggal' => 'required|date',
         ]);
 
+
         $validated['penjualan_kode'] = Penjualan::generateKodePenjualan();
+
 
         try {
             Penjualan::create($validated);
@@ -55,6 +67,8 @@ class PenjualanController extends Controller{
     }
 
 
+
+
     public function edit($id){
         $penjualan = Penjualan::findOrFail($id);
         $users = UserModel::all();
@@ -63,15 +77,17 @@ class PenjualanController extends Controller{
             'list' => ['Home', 'Penjualan', 'Edit']
         ];
 
+
         return view('Penjualan.edit', compact('penjualan', 'users', 'breadcrumb'));
     }
+
 
     public function update(Request $request, $id){
         $validated = $request->validate([
             'pembeli' => 'required|string|max:50',
             'penjualan_tanggal' => 'required|date',
         ]);
-    
+   
         try {
             $penjualan = Penjualan::findOrFail($id);
             $penjualan->update($validated);
@@ -81,6 +97,7 @@ class PenjualanController extends Controller{
             return redirect()->back()->with('error', 'Terjadi kesalahan saat memperbarui penjualan.')->withInput();
         }
     }
+
 
     public function destroy($id){
         try {
@@ -92,6 +109,7 @@ class PenjualanController extends Controller{
             return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus penjualan.');
         }
     }
+
 
     private function getPenjualanData(){
         $penjualan = Penjualan::with('user');
@@ -106,3 +124,6 @@ class PenjualanController extends Controller{
             ->make(true);
     }
 }
+
+
+

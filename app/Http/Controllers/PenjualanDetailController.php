@@ -1,6 +1,8 @@
 <?php
 
+
 namespace App\Http\Controllers;
+
 
 use App\Models\PenjualanDetail;
 use App\Models\Penjualan;
@@ -9,22 +11,25 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
+
 class PenjualanDetailController extends Controller{
+
 
     public function index(Request $request){
         $breadcrumb = (object) [
             'title' => 'Daftar Detail Penjualan',
             'list' => ['Home', 'Detail Penjualan']
         ];
-    
+   
         $activemenu = 'PenjualanDetail';
-    
+   
         if ($request->ajax()) {
             return $this->getPenjualanDetailData();
         }
-    
+   
         return view('PenjualanDetail.index', compact('breadcrumb', 'activemenu'));
     }
+
 
     public function create(){
         $breadcrumb = (object) [
@@ -32,11 +37,14 @@ class PenjualanDetailController extends Controller{
             'list' => ['Home', 'Detail Penjualan', 'Tambah']
         ];
 
+
         $penjualans = Penjualan::all();
         $barangs = Barang::all();
 
+
         return view('PenjualanDetail.create', compact('breadcrumb', 'penjualans', 'barangs'));
     }
+
 
     public function store(Request $request){
         $validated = $request->validate([
@@ -45,7 +53,7 @@ class PenjualanDetailController extends Controller{
             'harga' => 'required|numeric|min:0',
             'jumlah' => 'required|integer|min:1',
         ]);
-        
+       
         try {
             PenjualanDetail::create($validated);
             return redirect()->route('PenjualanDetail.index')->with('success', 'Detail Penjualan berhasil ditambahkan.');
@@ -54,6 +62,7 @@ class PenjualanDetailController extends Controller{
             return redirect()->back()->with('error', 'Terjadi kesalahan saat menambahkan detail penjualan.')->withInput();
         }
     }
+
 
     public function edit($id){
         $penjualanDetail = PenjualanDetail::findOrFail($id);
@@ -64,8 +73,10 @@ class PenjualanDetailController extends Controller{
             'list' => ['Home', 'Detail Penjualan', 'Edit']
         ];
 
+
         return view('PenjualanDetail.edit', compact('penjualanDetail', 'penjualans', 'barangs', 'breadcrumb'));
     }
+
 
     public function update(Request $request, $id){
         $validated = $request->validate([
@@ -74,6 +85,7 @@ class PenjualanDetailController extends Controller{
             'harga' => 'required|numeric|min:0',
             'jumlah' => 'required|integer|min:1',
         ]);
+
 
         try {
             $penjualanDetail = PenjualanDetail::findOrFail($id);
@@ -84,6 +96,7 @@ class PenjualanDetailController extends Controller{
             return redirect()->back()->with('error', 'Terjadi kesalahan saat memperbarui detail penjualan.')->withInput();
         }
     }
+
 
     public function destroy($id){
         try {
@@ -96,6 +109,7 @@ class PenjualanDetailController extends Controller{
         }
     }
 
+
     public function getHargaBarang($id){
         try {
             $barang = Barang::findOrFail($id);
@@ -105,6 +119,7 @@ class PenjualanDetailController extends Controller{
             return response()->json(['error' => 'Barang tidak ditemukan'], 404);
         }
     }
+
 
     private function getPenjualanDetailData(){
         $penjualanDetail = PenjualanDetail::with(['penjualan', 'barang']);
@@ -122,3 +137,6 @@ class PenjualanDetailController extends Controller{
             ->make(true);
     }
 }
+
+
+

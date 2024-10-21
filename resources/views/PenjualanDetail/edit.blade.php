@@ -1,5 +1,6 @@
 @extends('layouts.template')
 
+
 @section('content')
 <div class="card">
     <div class="card-header">
@@ -72,6 +73,7 @@
 </div>
 @endsection
 
+
 @push('js')
 <script>
     $(document).ready(function() {
@@ -101,3 +103,6 @@
     });
 </script>
 @endpush
+
+
+
