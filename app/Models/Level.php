@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Level extends Model
-{
+class Level extends Model{
     use HasFactory;
 
 
@@ -21,8 +20,8 @@ class Level extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
-    public function users()
-    {
+
+    public function users(){
         return $this->hasMany(UserModel::class, 'level_id','level_nama');
     }
 

@@ -154,7 +154,6 @@
                         <button onclick="deleteUser('${response.data.delete_url}')" class="btn btn-danger btn-sm">Hapus</button>`
                     ]).draw().node();
 
-                    // Highlight baris baru
                     $(newRowNode).addClass('highlight');
                     setTimeout(function() {
                         $(newRowNode).removeClass('highlight');
@@ -350,5 +349,5 @@
             });
         }
     }
-    </script>
-    @endpush
+</script>
+@endpush

@@ -8,18 +8,15 @@ use App\Models\Level;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class RegisterController extends Controller
-{
-    public function create()
-    {
+class RegisterController extends Controller{
+    public function create(){
         $level = Level::select('level_id', 'level_nama') -> get();
 
-        return view('auth.register') -> with('level', $level); //view untuk laman registrasi
+        return view('auth.register') -> with('level', $level); 
         
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         $validator = Validator::make($request->all(), [
             'username' => 'required|max:20|unique:m_user,username', 
             'password' => 'required|min:5|max:20|',

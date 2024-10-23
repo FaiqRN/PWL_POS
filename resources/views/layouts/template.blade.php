@@ -35,14 +35,16 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{url('/')}}" class="brand-link">
-      <img src="{{asset('adminlte/dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">PWL - Starter Code</span>
+      <img src="{{asset('adminlte/dist/img/txt.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">Eternal Bliss</span>
     </a>
 
 
     <!-- Sidebar -->
     @include('layouts.sidebar')
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
     <!-- /.sidebar -->
+    <link rel="stylesheet" href="{{ asset('css/custom-sidebar.css') }}">
   </aside>
 
 
@@ -54,6 +56,16 @@
 
     <!-- Main content -->
     <section class="content">
+      <style>
+        .content-wrapper {
+            background-color: rgb(255, 254, 203) !important;
+        }
+        
+        .card {
+            background-color: white !important;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1) !important;
+        }
+    </style>
       @yield('content')
 
 

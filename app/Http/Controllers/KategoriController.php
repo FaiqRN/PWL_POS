@@ -8,10 +8,8 @@ use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
-class KategoriController extends Controller
-{
-    public function index()
-    {
+class KategoriController extends Controller{
+    public function index(){
         $breadcrumb = (object) [
             'title' => 'Daftar Kategori yang terdaftar dalam sistem',
             'list' => ['Home', 'Kategori']
@@ -20,8 +18,7 @@ class KategoriController extends Controller
         return view('kategori.index', compact('breadcrumb'));
     }
 
-    public function list()
-    {
+    public function list(){
         $kategori = Kategori::query();
         return DataTables::of($kategori)
             ->addIndexColumn()
@@ -32,13 +29,11 @@ class KategoriController extends Controller
             ->make(true);
     }
 
-    public function create()
-    {
+    public function create(){
         return view('kategori.create');
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         $validator = Validator::make($request->all(), [
             'kategori_kode' => 'required|unique:m_kategori,kategori_kode|max:255',
             'kategori_nama' => 'required|max:255',
@@ -64,14 +59,12 @@ class KategoriController extends Controller
         }
     }
 
-    public function edit($id)
-    {
+    public function edit($id){
         $kategori = Kategori::findOrFail($id);
         return view('kategori.edit', compact('kategori'));
     }
 
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id){
         $validator = Validator::make($request->all(), [
             'kategori_kode' => 'required|max:255|unique:m_kategori,kategori_kode,'.$id.',kategori_id',
             'kategori_nama' => 'required|max:255',
@@ -98,8 +91,7 @@ class KategoriController extends Controller
         }
     }
 
-    public function destroy($id)
-    {
+    public function destroy($id){
         try {
             $kategori = Kategori::findOrFail($id);
             $kategori->delete();

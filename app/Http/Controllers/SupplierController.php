@@ -7,10 +7,8 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
-class SupplierController extends Controller
-{
-    public function index()
-    {
+class SupplierController extends Controller{
+    public function index(){
         $breadcrumb = (object) [
             'title' => 'Daftar Supplier',
             'list' => ['Home', 'Supplier']
@@ -19,8 +17,7 @@ class SupplierController extends Controller
         return view('supplier.index', compact('breadcrumb'));
     }
 
-    public function list()
-    {
+    public function list(){
         $supplier = Supplier::query();
         return DataTables::of($supplier)
             ->addIndexColumn()
@@ -31,14 +28,12 @@ class SupplierController extends Controller
             ->make(true);
     }
 
-    public function create()
-    {
+    public function create(){
         $supplierCode = Supplier::generateUniqueCode();
         return view('supplier.create', compact('supplierCode'));
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         $validator = Validator::make($request->all(), [
             'supplier_kode' => 'required|unique:m_supplier,supplier_kode|max:10',
             'supplier_nama' => 'required|max:100',
@@ -58,14 +53,12 @@ class SupplierController extends Controller
         ]);
     }
 
-    public function edit($id)
-    {
+    public function edit($id){
         $supplier = Supplier::findOrFail($id);
         return view('supplier.edit', compact('supplier'));
     }
 
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id){
         $validator = Validator::make($request->all(), [
             'supplier_kode' => 'required|max:10|unique:m_supplier,supplier_kode,'.$id.',supplier_id',
             'supplier_nama' => 'required|max:100',
@@ -86,8 +79,7 @@ class SupplierController extends Controller
         ]);
     }
 
-    public function show($id)
-    {
+    public function show($id){
         $supplier = Supplier::findOrFail($id);
         return view('supplier.show', compact('supplier'));
     }

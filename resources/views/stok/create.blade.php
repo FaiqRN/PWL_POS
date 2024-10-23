@@ -1,55 +1,98 @@
-<form id="stokForm" action="{{ route('stok.store') }}" method="POST">
-    @csrf
-    <div class="modal-header">
-        <h5 class="modal-title" id="stokModalLabel">Tambah Stok</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+@extends('layouts.template')
+@section('content')
+<div class="card card-outline card-primary">
+    <div class="card-header">
+        <h3 class="card-title">{{ $breadcrumb->title }}</h3>
     </div>
-    <div class="modal-body">
-        <div class="form-group">
-            <label for="supplier_id">{{ __('Supplier') }}:</label>
-            <select class="form-control" id="supplier_id" name="supplier_id" required>
-                <option value="">Pilih Supplier</option>
-                @foreach($suppliers as $supplier)
-                    <option value="{{ $supplier->supplier_id }}">{{ $supplier->supplier_nama }}</option>
-                @endforeach
-            </select>
-            <span class="invalid-feedback" id="supplier_id_error"></span>
-        </div>
-        <div class="form-group">
-            <label for="barang_id">{{ __('Barang') }}:</label>
-            <select class="form-control" id="barang_id" name="barang_id" required>
-                <option value="">Pilih Barang</option>
-                @foreach($barangs as $barang)
-                    <option value="{{ $barang->barang_id }}">{{ $barang->barang_nama }}</option>
-                @endforeach
-            </select>
-            <span class="invalid-feedback" id="barang_id_error"></span>
-        </div>
-        <div class="form-group">
-            <label for="user_id">{{ __('User') }}:</label>
-            <select class="form-control" id="user_id" name="user_id" required>
-                <option value="">Pilih User</option>
-                @foreach($users as $user)
-                    <option value="{{ $user->user_id }}">{{ $user->nama }}</option>
-                @endforeach
-            </select>
-            <span class="invalid-feedback" id="user_id_error"></span>
-        </div>
-        <div class="form-group">
-            <label for="stok_tanggal">{{ __('Tanggal') }}:</label>
-            <input type="date" class="form-control" id="stok_tanggal" name="stok_tanggal" value="{{ date('Y-m-d') }}" required>
-            <span class="invalid-feedback" id="stok_tanggal_error"></span>
-        </div>
-        <div class="form-group">
-            <label for="stok_jumlah">{{ __('Jumlah') }}:</label>
-            <input type="number" class="form-control" id="stok_jumlah" name="stok_jumlah" required min="1">
-            <span class="invalid-feedback" id="stok_jumlah_error"></span>
-        </div>
+    <div class="card-body">
+        <form action="{{ route('stok.store') }}" method="POST">
+            @csrf
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Supplier</label>
+                        <select class="form-control select2 @error('supplier_id') is-invalid @enderror" 
+                                name="supplier_id" required>
+                            <option value="">Pilih Supplier</option>
+                            @foreach($suppliers as $supplier)
+                                <option value="{{ $supplier->supplier_id }}" 
+                                    {{ old('supplier_id') == $supplier->supplier_id ? 'selected' : '' }}>
+                                    {{ $supplier->supplier_nama }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('supplier_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Barang</label>
+                        <select class="form-control select2 @error('barang_id') is-invalid @enderror" 
+                                name="barang_id" required>
+                            <option value="">Pilih Barang</option>
+                            @foreach($barangs as $barang)
+                                <option value="{{ $barang->barang_id }}"
+                                    {{ old('barang_id') == $barang->barang_id ? 'selected' : '' }}>
+                                    {{ $barang->barang_nama }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('barang_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Tanggal</label>
+                        <input type="datetime-local" class="form-control @error('stok_tanggal') is-invalid @enderror"
+                               name="stok_tanggal" value="{{ old('stok_tanggal', date('Y-m-d\TH:i')) }}" required>
+                        @error('stok_tanggal')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Jumlah</label>
+                        <input type="number" class="form-control @error('stok_jumlah') is-invalid @enderror"
+                               name="stok_jumlah" value="{{ old('stok_jumlah') }}" required min="1">
+                        @error('stok_jumlah')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+
+            <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <a href="{{ route('stok.index') }}" class="btn btn-secondary">Kembali</a>
+                </div>
+            </div>
+        </form>
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-        <button type="submit" class="btn btn-primary">Simpan</button>
-    </div>
-</form>
+</div>
+@endsection
+
+@push('css')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endpush
+
+@push('js')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.select2').select2({
+        width: '100%'
+    });
+});
+</script>
+@endpush

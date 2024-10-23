@@ -26,7 +26,6 @@
 <div class="modal fade" id="kategoriModal" tabindex="-1" role="dialog" aria-labelledby="kategoriModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <!-- Modal content will be loaded here -->
         </div>
     </div>
 </div>
